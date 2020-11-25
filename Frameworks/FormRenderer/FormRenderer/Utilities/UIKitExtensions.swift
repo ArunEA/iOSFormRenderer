@@ -16,7 +16,7 @@ extension CGFloat {
 extension Date {
 	var ddMMyyyy: String {
 		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "dd-MM-yyyy"
+		dateFormatter.dateFormat = FormConfiguration.current.dateFormat
 		
 		return dateFormatter.string(from: self)
 	}
@@ -25,7 +25,7 @@ extension Date {
 extension String {
 	var toDate: Date? {
 		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "dd-MM-yyyy"
+		dateFormatter.dateFormat = FormConfiguration.current.dateFormat
 		
 		return dateFormatter.date(from: self)
 	}

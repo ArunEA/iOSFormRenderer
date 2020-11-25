@@ -66,7 +66,7 @@ class ViewController: UIViewController, CellButtonDelegate {
 		// Create the renderer by supplying a [FormCellType], tableView, UIViewController and FormConfiguration
 		// FormConfiguration can be nil (Will take default values)
 		
-		let config = FormConfiguration(themeColor: .systemIndigo, altThemeColor: .systemPink)
+		let config = FormConfiguration(themeColor: .systemIndigo, altThemeColor: .lightGray)
 		renderer = FormRenderer(cellData, tableView: tableView, controller: self, config: config)
 		
 		// Reload form to refresh

@@ -76,11 +76,10 @@ class SegmentControlTableViewCell: UITableViewCell {
     private func setConstraints() {
         let constraints = [
             
-            segmentControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            segmentControl.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .kTableCellPadding),
-            segmentControl.heightAnchor.constraint(equalToConstant: 30),
-            segmentControl.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -10),
-            segmentControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+			segmentControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .kTableCellPadding),
+            segmentControl.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .kInternalPadding),
+			segmentControl.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -.kInternalPadding),
+			segmentControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.kTableCellPadding)
         ]
         
         NSLayoutConstraint.activate(constraints)

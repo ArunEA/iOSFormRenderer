@@ -7,6 +7,10 @@
 
 import UIKit
 
+public enum TextFieldBorderStyle {
+	case none, box
+}
+
 public class FormConfiguration {
 	static var current = FormConfiguration()
 	
@@ -19,6 +23,9 @@ public class FormConfiguration {
 	public var segmentSelectedTextColor: UIColor?
 	public var toggleOnColor: UIColor?
 	public var toggleOffColor: UIColor?
+	
+	public var dateFormat: String = "MMM, dd yyyy"
+	public var borderStyle: TextFieldBorderStyle = .box
 	
 	public init(themeColor: UIColor = UIColor.clear, altThemeColor: UIColor = UIColor.clear) {
 		self.themeColor = themeColor

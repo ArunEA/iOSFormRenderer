@@ -9,6 +9,8 @@
 import UIKit
 
 class BorderedTextField: UITextField {
+	private let config = FormConfiguration.current
+	
     /// Toggle this to display eye icon on the textfield
 	var isSecureField: Bool = false {
 		didSet {
@@ -57,7 +59,9 @@ class BorderedTextField: UITextField {
     }
     
     private func beautify() {
-		let borderColor = FormConfiguration.current.textFieldBorderColor ?? FormConfiguration.current.themeColor
+		if config.borderStyle == .none { return }
+		
+		let borderColor = config.textFieldBorderColor ?? config.themeColor
 		self.layer.borderColor = borderColor.cgColor
         self.layer.borderWidth = 0.5
 		self.tintColor = borderColor
