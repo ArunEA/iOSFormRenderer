@@ -17,6 +17,7 @@ class SegmentControlTableViewCell: UITableViewCell {
     static let reuseId = "SegmentSelectionTableViewCell"
     
     weak var delegate: SegmentCellDelegate?
+	private var config = FormConfiguration.current
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,12 +34,12 @@ class SegmentControlTableViewCell: UITableViewCell {
         segmentControl.selectedSegmentIndex = 0
         segmentControl.layer.cornerRadius = 5.0
         segmentControl.clipsToBounds = true
-        segmentControl.tintColor = #colorLiteral(red: 1, green: 0.3411764706, blue: 0.2, alpha: 1)
-        segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : #colorLiteral(red: 1, green: 0.3411764706, blue: 0.2, alpha: 1)], for: .normal)
-        segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+		segmentControl.tintColor = config.segmentTextColor ?? config.themeColor
+		segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: config.segmentTextColor ?? config.themeColor], for: .normal)
+        segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: config.segmentSelectedTextColor ?? config.altThemeColor], for: .selected)
         
         if #available(iOS 13.0, *) {
-            segmentControl.selectedSegmentTintColor = #colorLiteral(red: 1, green: 0.3411764706, blue: 0.2, alpha: 1)
+            segmentControl.selectedSegmentTintColor = config.segmentTextColor ?? config.themeColor
         }
         
         segmentControl.addTarget(self, action: #selector(segmentTapped(sender:)), for: .valueChanged)

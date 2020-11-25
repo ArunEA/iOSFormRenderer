@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol FootnoteButtonDelegate: NSObject {
-    func footnoteButtonCallback(_ title: String)
+public protocol CellButtonDelegate: NSObject {
+    func cellButtonCallback(_ title: String)
 }
 
 class FootnoteButtonTableViewCell: UITableViewCell {
     static let reuseId = "FootnoteButtonTableViewCell"
-    private weak var delegate: FootnoteButtonDelegate?
+    private weak var delegate: CellButtonDelegate?
     private let buttonHeight: CGFloat = 44
     
     private lazy var footnoteButton: UIButton = {
@@ -70,6 +70,6 @@ class FootnoteButtonTableViewCell: UITableViewCell {
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
-        delegate?.footnoteButtonCallback(sender.titleLabel?.text ?? "")
+        delegate?.cellButtonCallback(sender.titleLabel?.text ?? "")
     }
 }

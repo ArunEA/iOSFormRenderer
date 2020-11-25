@@ -15,8 +15,8 @@
 		8DD4AB5E256D3EC60030EB97 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DD4AB5C256D3EC60030EB97 /* LaunchScreen.storyboard */; };
 		8DD4AB69256D3EC60030EB97 /* FormRendererExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD4AB68256D3EC60030EB97 /* FormRendererExampleTests.swift */; };
 		8DD4AB74256D3EC60030EB97 /* FormRendererExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD4AB73256D3EC60030EB97 /* FormRendererExampleUITests.swift */; };
-		8DD4AB8F256D3F3D0030EB97 /* FormRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DD4AB8A256D3EFE0030EB97 /* FormRenderer.framework */; };
-		8DD4AB90256D3F3E0030EB97 /* FormRenderer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DD4AB8A256D3EFE0030EB97 /* FormRenderer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8DD4ABCC256E3E9B0030EB97 /* FormRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DD4ABC8256E3E890030EB97 /* FormRenderer.framework */; };
+		8DD4ABCD256E3E9B0030EB97 /* FormRenderer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8DD4ABC8256E3E890030EB97 /* FormRenderer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +34,9 @@
 			remoteGlobalIDString = 8DD4AB4D256D3EC20030EB97;
 			remoteInfo = FormRendererExample;
 		};
-		8DD4AB89256D3EFE0030EB97 /* PBXContainerItemProxy */ = {
+		8DD4ABC7256E3E890030EB97 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8DD4AB85256D3EFE0030EB97 /* FormRenderer.xcodeproj */;
+			containerPortal = 8DD4ABC3256E3E890030EB97 /* FormRenderer.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DD4AACD256BEF3F0030EB97;
 			remoteInfo = FormRenderer;
@@ -50,7 +50,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8DD4AB90256D3F3E0030EB97 /* FormRenderer.framework in Embed Frameworks */,
+				8DD4ABCD256E3E9B0030EB97 /* FormRenderer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,7 +72,7 @@
 		8DD4AB6F256D3EC60030EB97 /* FormRendererExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FormRendererExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DD4AB73256D3EC60030EB97 /* FormRendererExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRendererExampleUITests.swift; sourceTree = "<group>"; };
 		8DD4AB75256D3EC60030EB97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8DD4AB85256D3EFE0030EB97 /* FormRenderer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FormRenderer.xcodeproj; path = ../../FormRenderer/FormRenderer.xcodeproj; sourceTree = "<group>"; };
+		8DD4ABC3256E3E890030EB97 /* FormRenderer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FormRenderer.xcodeproj; path = FormRenderer/FormRenderer.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD4AB8F256D3F3D0030EB97 /* FormRenderer.framework in Frameworks */,
+				8DD4ABCC256E3E9B0030EB97 /* FormRenderer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,15 +157,15 @@
 		8DD4AB84256D3ED20030EB97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8DD4AB85256D3EFE0030EB97 /* FormRenderer.xcodeproj */,
+				8DD4ABC3256E3E890030EB97 /* FormRenderer.xcodeproj */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
-		8DD4AB86256D3EFE0030EB97 /* Products */ = {
+		8DD4ABC4256E3E890030EB97 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8DD4AB8A256D3EFE0030EB97 /* FormRenderer.framework */,
+				8DD4ABC8256E3E890030EB97 /* FormRenderer.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -262,8 +262,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 8DD4AB86256D3EFE0030EB97 /* Products */;
-					ProjectRef = 8DD4AB85256D3EFE0030EB97 /* FormRenderer.xcodeproj */;
+					ProductGroup = 8DD4ABC4256E3E890030EB97 /* Products */;
+					ProjectRef = 8DD4ABC3256E3E890030EB97 /* FormRenderer.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -276,11 +276,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		8DD4AB8A256D3EFE0030EB97 /* FormRenderer.framework */ = {
+		8DD4ABC8256E3E890030EB97 /* FormRenderer.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = FormRenderer.framework;
-			remoteRef = 8DD4AB89256D3EFE0030EB97 /* PBXContainerItemProxy */;
+			remoteRef = 8DD4ABC7256E3E890030EB97 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

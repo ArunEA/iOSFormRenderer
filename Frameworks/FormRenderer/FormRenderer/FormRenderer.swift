@@ -10,19 +10,42 @@ import UIKit
 public struct FormRenderer {
 	private var config: FormConfiguration = FormConfiguration()
 	private var tableController: FormTableViewController
-	private var dataManager = FormDataManager.shared
+	private var dataManager = FormDataManager()
 	
-	public init(_ formData: [FormCellType], tableView: UITableView, controller: UIViewController, config: FormConfiguration?) {
+	public init(_ formData: [FormCellType], tableView: UITableView, controller: UIViewController, config: FormConfiguration? = nil) {
 		if let config = config {
 			self.config = config
 		} else {
 			self.config = FormConfiguration()
 		}
 		
-		self.tableController = FormTableViewController(tableView: tableView, controller: controller, config: self.config)
+		FormConfiguration.current = self.config
+		self.tableController = FormTableViewController(tableView: tableView, controller: controller, config: self.config, dataManager: dataManager)
 		dataManager.formData = formData
+	}
+	
+	public func reloadForm() {
+		self.tableController.refreshTable()
+	}
+	
+	public func formValues() -> [String: Any?] {
+		tableController.endEditing()
+		
+		return dataManager.getFormValues()
+	}
+	
+	public func value(for key: String) -> Any? {
+		return dataManager.value(for: key)
+	}
+	
+	public mutating func replaceAllFormValues(_ values: [FormCellType]) {
+		dataManager.formData = values
 		
 		self.tableController.refreshTable()
+	}
+	
+	public mutating func cellModel(for key: String) -> CellModelType? {
+		return dataManager.cellModel(for: key)
 	}
 	
 	public mutating func updateFormValue(_ value: FormCellType) {

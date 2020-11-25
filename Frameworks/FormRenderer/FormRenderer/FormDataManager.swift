@@ -7,14 +7,45 @@
 
 import Foundation
 
-struct FormDataManager {
-	static let shared = FormDataManager()
-	
+class FormDataManager {
 	var formData: [FormCellType] = []
-	private var formValues: [String: Any] = [:]
 	
-	public func getFormValues() -> [String: Any] {
+	func getFormValues() -> [String: Any?] {
+		var formValues = [String: Any?]()
+		
+		formData.forEach { (type) in
+			type.model.forEach { (cellModel) in
+				if let key = cellModel.key {
+					formValues[key] = cellModel.value
+				}
+			}
+		}
+		
 		return formValues
+	}
+	
+	func value(for key: String) -> Any? {
+		for cellType in formData {
+			for model in cellType.model {
+				if model.key == key {
+					return model.value
+				}
+			}
+		}
+		
+		return nil
+	}
+	
+	func cellModel(for key: String) -> CellModelType? {
+		for cellType in formData {
+			for model in cellType.model {
+				if model.key == key {
+					return model
+				}
+			}
+		}
+		
+		return nil
 	}
 	
 	func getFormCellType(_ key: String) -> FormCellType? {
@@ -25,12 +56,11 @@ struct FormDataManager {
 		}
 	}
 	
-	mutating func updateValue(_ value: Any, key: String) throws {
+	func updateValue(_ value: Any, key: String) throws {
 		for cellType in formData {
 			for model in cellType.model {
 				if model.key == key {
 					try model.updateValue(value)
-					formValues[key] = value
 					
 					return
 				}

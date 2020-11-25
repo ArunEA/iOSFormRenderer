@@ -79,14 +79,14 @@ class TextEditTableViewCell: UITableViewCell {
         textField.text = model.textValue
         textField.placeholder = model.placeHolder
         textField.keyboardType = self.model?.keyBoardType ?? .default
-        textField.isSecureTextEntry = model.isSecure
+        textField.isSecureField = model.isSecure
         
         if let type = self.model?.keyBoardType, type == .phonePad {
             textField.text = formattedNumber(number: model.textValue ?? "")
         }
 		
 		textField.shouldAddBorder = model.shouldAddBorder
-		textField.isUserInteractionEnabled = self.model?.enabled == true
+		textField.isUserInteractionEnabled = self.model?.isEnabled == true
     }
     
     func clearData() {

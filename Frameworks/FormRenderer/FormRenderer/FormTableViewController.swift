@@ -13,12 +13,13 @@ class FormTableViewController: NSObject, UITableViewDataSource, UITableViewDeleg
 	private var config: FormConfiguration
 	private var lastPickedCell: ImagePickerTableViewCell?
 	private var imagePicker: ImagePicker?
-	private var dataManager: FormDataManager = FormDataManager.shared
+	private var dataManager: FormDataManager
 	
-	init(tableView: UITableView, controller: UIViewController, config: FormConfiguration) {
+	init(tableView: UITableView, controller: UIViewController, config: FormConfiguration, dataManager: FormDataManager) {
 		self.tableView = tableView
 		self.controller = controller
 		self.config = config
+		self.dataManager = dataManager
 		
 		super.init()
 		
@@ -26,6 +27,10 @@ class FormTableViewController: NSObject, UITableViewDataSource, UITableViewDeleg
 		self.tableView?.delegate = self
 		self.registerCells()
 		self.imagePicker = ImagePicker(presentationController: controller, delegate: self)
+	}
+	
+	func endEditing() {
+		tableView?.endEditing(true)
 	}
 	
 	func refreshTable() {
@@ -107,10 +112,11 @@ class FormTableViewController: NSObject, UITableViewDataSource, UITableViewDeleg
 			toggleCell.configure(model, delegate: self, config: config)
 			cell = toggleCell
 			
-		case .segment:
+		case .segment(let model):
 			guard let toggleCell = tableView.dequeueReusableCell(withIdentifier: SegmentControlTableViewCell.reuseId, for: indexPath) as? SegmentControlTableViewCell else {
 				return UITableViewCell()
 			}
+			toggleCell.configure(model)
 			toggleCell.delegate = self
 			cell = toggleCell
 			
@@ -153,7 +159,7 @@ class FormTableViewController: NSObject, UITableViewDataSource, UITableViewDeleg
 	}
 }
 
-extension FormTableViewController: CellDataFetchProtocol, TextPickerDelegate, FootnoteButtonDelegate, SegmentCellDelegate, SwitchCellDelegate, ImagePickerCellDelegate {
+extension FormTableViewController: CellDataFetchProtocol, TextPickerDelegate, CellButtonDelegate, SegmentCellDelegate, SwitchCellDelegate, ImagePickerCellDelegate {
 	func segmentTapped(key: String, _ value: String) {
 		updateForm(for: key, value: value)
 	}
@@ -178,7 +184,7 @@ extension FormTableViewController: CellDataFetchProtocol, TextPickerDelegate, Fo
 		updateForm(for: key, value: value)
 	}
 	
-	func footnoteButtonCallback(_ title: String) {
+	func cellButtonCallback(_ title: String) {
 		
 	}
 	
@@ -187,9 +193,9 @@ extension FormTableViewController: CellDataFetchProtocol, TextPickerDelegate, Fo
 			try dataManager.updateValue(value, key: key)
 		}
 		catch FormError.incorrectDataType(let message) {
-			print("FORM ERROR: This is not supposed to happen : ", message)
+			assert(false, message)
 		} catch FormError.keyNotExist {
-			print("FORM ERROR: This is not supposed to happen : Key doesn't exist")
+			assert(false, "Key doesn't exist")
 		} catch {
 			print("No other errors")
 		}
@@ -198,17 +204,20 @@ extension FormTableViewController: CellDataFetchProtocol, TextPickerDelegate, Fo
 
 extension FormTableViewController: PickerDelegate {
 	func didSelect(url: URL?, type: String) {
-		if let filePath = url?.path, let image = UIImage(contentsOfFile: filePath) {
+		if let url = url, let image = UIImage(contentsOfFile: url.path) {
 			if let value = image.jpegData(compressionQuality: 1.0), let key = self.lastPickedCell?.model?.key {
-				updateForm(for: key, value: value)
+				updateForm(for: key, value: (url, value))
+				
+				tableView?.reloadData()
 			}
 		}
-		
 	}
 	
 	func didCaptureImage(_ image: UIImage) {
 		if let value = image.jpegData(compressionQuality: 1.0), let key = self.lastPickedCell?.model?.key {
-			updateForm(for: key, value: value)
+			updateForm(for: key, value: ("Image Uploaded", value))
+			
+			tableView?.reloadData()
 		}
 	}
 }

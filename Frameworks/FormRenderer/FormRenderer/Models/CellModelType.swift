@@ -9,24 +9,29 @@ import UIKit
 
 public protocol CellModelType {
 	var key: String? { get set }
+	var value: Any? { get }
 	func updateValue(_ value: Any) throws
 }
 
 public class DatePickerModel: CellModelType {
 	public var key: String?
-	var dateValue: Date?
+	public var dateValue: Date?
 	
-	var minDate: Date?
-	var maxDate: Date?
+	public var minDate: Date?
+	public var maxDate: Date?
 	
-	var contextText: String?
-	var isEnabled: Bool = true
+	public var contextText: String?
+	public var isEnabled: Bool = true
+	
+	public var value: Any? {
+		return dateValue
+	}
 	
 	public func updateValue(_ value: Any) throws {
-		if let value = value as? Date {
-			self.dateValue = value
+		if let value = value as? String {
+			self.dateValue = value.toDate
 		} else {
-			throw FormError.incorrectDataType("Incorrect data type, Date type is expected")
+			throw FormError.incorrectDataType("Incorrect data type, String type is expected")
 		}
 	}
 	
@@ -47,17 +52,24 @@ public class DatePickerModel: CellModelType {
 
 public class ImagePickerModel: CellModelType {
 	public var key: String?
-	var titleText: String?
-	var contextText: String?
-	var imageUrl: URL?
+	public var titleText: String?
+	public var contextText: String?
+	public var imageUrl: URL?
+	var imageData: Data?
+	
+	public var value: Any? {
+		return imageData
+	}
 	
 	public func updateValue(_ value: Any) throws {
-		if let value = value as? URL {
-			self.imageUrl = value
-		} else if let value = value as? String {
-			self.titleText = value
+		if let value = value as? (URL, Data) {
+			self.imageUrl = value.0
+			self.imageData = value.1
+		} else if let value = value as? (String, Data) {
+			self.titleText = value.0
+			self.imageData = value.1
 		} else {
-			throw FormError.incorrectDataType("Incorrect data type, URL or String type is expected")
+			throw FormError.incorrectDataType("Incorrect data type, URL or String with Data type is expected")
 		}
 	}
 	
@@ -70,8 +82,12 @@ public class ImagePickerModel: CellModelType {
 
 public class SegmentControlModel: CellModelType {
 	public var key: String?
-	var selectedItem: String?
-	var items: [String]
+	public var selectedItem: String?
+	public var items: [String]
+	
+	public var value: Any? {
+		return selectedItem
+	}
 	
 	public func updateValue(_ value: Any) throws {
 		if let value = value as? String {
@@ -90,8 +106,13 @@ public class SegmentControlModel: CellModelType {
 
 public class ToggleViewModel: CellModelType {
 	public var key: String?
-	var contextText: NSAttributedString
-	var defaultValue: Bool
+	public var attrContextText: NSAttributedString?
+	public var contextText: String?
+	public var defaultValue: Bool
+	
+	public var value: Any? {
+		return defaultValue
+	}
 	
 	public func updateValue(_ value: Any) throws {
 		if let value = value as? Bool {
@@ -101,23 +122,27 @@ public class ToggleViewModel: CellModelType {
 		}
 	}
 	
-	public init(key: String, contextText: NSAttributedString, defaultValue: Bool = false) {
+	public init(key: String, contextText: String? = nil, attrContextText: NSAttributedString? = nil, defaultValue: Bool = false) {
 		self.key = key
 		self.contextText = contextText
+		self.attrContextText = attrContextText
 		self.defaultValue = defaultValue
 	}
 }
 
 public class TextEditModel: CellModelType {
 	public var key: String?
-	var isSecure: Bool = false
-	var textValue: String?
-	var placeHolder: String?
-	var keyBoardType: UIKeyboardType
-	var enabled: Bool = true
-	var shouldAddBorder: Bool = true
+	public var isSecure: Bool = false
+	public var textValue: String?
+	public var placeHolder: String?
+	public var keyBoardType: UIKeyboardType
+	public var isEnabled: Bool = true
+	public var shouldAddBorder: Bool = true
+	public var contextText: String?
 	
-	var contextText: String?
+	public var value: Any? {
+		return textValue
+	}
 	
 	public func updateValue(_ value: Any) throws {
 		if let value = value as? String {
@@ -134,20 +159,24 @@ public class TextEditModel: CellModelType {
 		self.contextText = contextText
 		self.keyBoardType = keyboardType
 		self.placeHolder = placeHolder
-		self.enabled = enabled
+		self.isEnabled = enabled
 		self.shouldAddBorder = shouldAddBorder
 	}
 }
 
 public class TextPickerModel: CellModelType {
 	public var key: String?
-	var textValue: String?
-	var placeHolder: String?
+	public var textValue: String?
+	public var placeHolder: String?
 	
-	var allValues: [String]?
-	var contextText: String?
-	var isEnabled: Bool = true
-	var shouldAddBorder: Bool = true
+	public var allValues: [String]?
+	public var contextText: String?
+	public var isEnabled: Bool = true
+	public var shouldAddBorder: Bool = true
+	
+	public var value: Any? {
+		return textValue
+	}
 	
 	public func updateValue(_ value: Any) throws {
 		if let value = value as? String {
@@ -175,7 +204,11 @@ public protocol TextDisplayModel: CellModelType {
 public class SimpleTextDisplayModel: TextDisplayModel {
 	public var key: String?
 	public var alignment: NSTextAlignment
-	var textValue: String?
+	public var textValue: String?
+	
+	public var value: Any? {
+		return textValue
+	}
 	
 	public func updateValue(_ value: Any) throws {
 		if let value = value as? String {
@@ -185,7 +218,7 @@ public class SimpleTextDisplayModel: TextDisplayModel {
 		}
 	}
 	
-	internal init(key: String? = nil, textValue: String? = nil, alignment: NSTextAlignment = .natural) {
+	public init(key: String? = nil, textValue: String? = nil, alignment: NSTextAlignment = .natural) {
 		self.key = key
 		self.textValue = textValue
 		self.alignment = alignment
@@ -195,7 +228,11 @@ public class SimpleTextDisplayModel: TextDisplayModel {
 public class AttrTextDisplayModel: TextDisplayModel {
 	public var key: String?
 	public var alignment: NSTextAlignment
-	var textValue: NSAttributedString
+	public var textValue: NSAttributedString
+	
+	public var value: Any? {
+		return textValue
+	}
 	
 	public func updateValue(_ value: Any) throws {
 		if let value = value as? NSAttributedString {
@@ -205,7 +242,7 @@ public class AttrTextDisplayModel: TextDisplayModel {
 		}
 	}
 	
-	internal init(key: String? = nil, textValue: NSAttributedString, alignment: NSTextAlignment = .natural) {
+	public init(key: String? = nil, textValue: NSAttributedString, alignment: NSTextAlignment = .natural) {
 		self.key = key
 		self.textValue = textValue
 		self.alignment = alignment
@@ -214,10 +251,14 @@ public class AttrTextDisplayModel: TextDisplayModel {
 
 public class TwoTextDisplayModel: CellModelType {
 	public var key: String?
-	var leftText: String?
-	var rightText: String?
-	var leftAlignment: NSTextAlignment
-	var rightAlignment: NSTextAlignment
+	public var leftText: String?
+	public var rightText: String?
+	public var leftAlignment: NSTextAlignment
+	public var rightAlignment: NSTextAlignment
+	
+	public var value: Any? {
+		return (leftText, rightText)
+	}
 	
 	public func updateValue(_ value: Any) throws {
 		if let value = value as? (String, String) {
@@ -228,7 +269,7 @@ public class TwoTextDisplayModel: CellModelType {
 		}
 	}
 	
-	internal init(key: String? = nil, leftText: String? = nil, rightText: String? = nil, leftAlignment: NSTextAlignment = .natural, rightAlignment: NSTextAlignment = .natural) {
+	public init(key: String? = nil, leftText: String? = nil, rightText: String? = nil, leftAlignment: NSTextAlignment = .natural, rightAlignment: NSTextAlignment = .natural) {
 		self.key = key
 		self.leftText = leftText
 		self.rightText = rightText
@@ -239,9 +280,13 @@ public class TwoTextDisplayModel: CellModelType {
 
 public class ButtonCellModel: CellModelType {
 	public var key: String?
-	var textValue: String
-	var alignment: NSTextAlignment
-	weak var delegate: FootnoteButtonDelegate?
+	public var textValue: String
+	public var alignment: NSTextAlignment
+	weak var delegate: CellButtonDelegate?
+	
+	public var value: Any? {
+		return textValue
+	}
 	
 	public func updateValue(_ value: Any) throws {
 		if let value = value as? String {
@@ -251,7 +296,7 @@ public class ButtonCellModel: CellModelType {
 		}
 	}
 	
-	internal init(key: String? = nil, textValue: String, alignment: NSTextAlignment = .natural, delegate: FootnoteButtonDelegate? = nil) {
+	public init(key: String? = nil, textValue: String, alignment: NSTextAlignment = .natural, delegate: CellButtonDelegate? = nil) {
 		self.key = key
 		self.textValue = textValue
 		self.alignment = alignment

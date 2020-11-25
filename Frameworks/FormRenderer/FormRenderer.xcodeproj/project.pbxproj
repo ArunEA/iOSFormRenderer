@@ -29,6 +29,7 @@
 		8DD4AB32256BFBAA0030EB97 /* CellModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD4AB31256BFBAA0030EB97 /* CellModelType.swift */; };
 		8DD4AB36256BFE5F0030EB97 /* FormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD4AB35256BFE5F0030EB97 /* FormTableViewController.swift */; };
 		8DD4ABA4256E23D70030EB97 /* FormDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD4ABA3256E23D70030EB97 /* FormDataManager.swift */; };
+		8DFD57EA256E65C9004B7EF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DFD57E9256E65C9004B7EF8 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		8DD4AB31256BFBAA0030EB97 /* CellModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModelType.swift; sourceTree = "<group>"; };
 		8DD4AB35256BFE5F0030EB97 /* FormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTableViewController.swift; sourceTree = "<group>"; };
 		8DD4ABA3256E23D70030EB97 /* FormDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDataManager.swift; sourceTree = "<group>"; };
+		8DFD57E9256E65C9004B7EF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				8DD4AADD256BF0120030EB97 /* TableViewCells */,
 				8DD4AAD0256BEF3F0030EB97 /* FormRenderer.h */,
 				8DD4AAD1256BEF3F0030EB97 /* Info.plist */,
+				8DFD57E9256E65C9004B7EF8 /* Assets.xcassets */,
 			);
 			path = FormRenderer;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DFD57EA256E65C9004B7EF8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,16 +10,17 @@ import UIKit
 
 class BorderedTextField: UITextField {
     /// Toggle this to display eye icon on the textfield
-    override var isSecureTextEntry: Bool {
-        didSet {
-            if self.isSecureTextEntry {
-                makeFieldSecure()
-            } else {
-                rightView = nil
-                rightViewMode = .never
-            }
-        }
-    }
+	var isSecureField: Bool = false {
+		didSet {
+			if self.isSecureField {
+				isSecureTextEntry = true
+				makeFieldSecure()
+			} else {
+				rightView = nil
+				rightViewMode = .never
+			}
+		}
+	}
 	
 	var shouldAddBorder: Bool = true {
 		didSet {
@@ -56,19 +57,20 @@ class BorderedTextField: UITextField {
     }
     
     private func beautify() {
-        self.layer.borderColor = #colorLiteral(red: 1, green: 0.3411764706, blue: 0.2, alpha: 1)
+		let borderColor = FormConfiguration.current.textFieldBorderColor ?? FormConfiguration.current.themeColor
+		self.layer.borderColor = borderColor.cgColor
         self.layer.borderWidth = 0.5
-        self.tintColor = #colorLiteral(red: 1, green: 0.3411764706, blue: 0.2, alpha: 1)
+		self.tintColor = borderColor
     }
     
     private func makeFieldSecure() {
         if (rightView as? UIButton) != nil { return }
-        
-        let image = UIImage(named: "hidden-eye")
+		
+		let hiddenImage = UIImage(named: "hidden-eye", in: Bundle(for: BorderedTextField.self), compatibleWith:nil)
         let button   = UIButton(type: .custom) as UIButton
         button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
-        button.setImage(image, for: .normal)
+        button.setImage(hiddenImage, for: .normal)
         button.addTarget(self, action: #selector(hideShowPasswordTextField(sender:)), for: .touchUpInside)
         
         rightView = button
@@ -80,10 +82,12 @@ class BorderedTextField: UITextField {
         
         if !isSecureTextEntry {
             isSecureTextEntry = true
-            hideShow.setImage(UIImage(named: "hidden-eye"), for: .normal)
+			let hiddenImage = UIImage(named: "hidden-eye", in: Bundle(for: BorderedTextField.self), compatibleWith:nil)
+            hideShow.setImage(hiddenImage, for: .normal)
         } else {
             isSecureTextEntry = false
-            hideShow.setImage(UIImage(named: "visibility-eye.png"), for: .normal)
+			let visibleImage = UIImage(named: "visibility-eye", in: Bundle(for: BorderedTextField.self), compatibleWith:nil)
+			hideShow.setImage(visibleImage, for: .normal)
         }
         
         becomeFirstResponder()

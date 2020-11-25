@@ -16,7 +16,7 @@ class SwitchTableViewCell: UITableViewCell, UITextViewDelegate {
     static let reuseId = "SwitchTableViewCell"
     weak var delegate: SwitchCellDelegate?
 	
-	private var config: FormConfiguration!
+	private var config = FormConfiguration.current
 
     // MARK: - UIRelated
     private lazy var contextTextView: SelfSizingTextView = {
@@ -35,9 +35,9 @@ class SwitchTableViewCell: UITableViewCell, UITextViewDelegate {
     private lazy var toggle: UISwitch = {
         let toggle = UISwitch()
         toggle.translatesAutoresizingMaskIntoConstraints = false
-		toggle.onTintColor = config.altThemeColor
-		toggle.thumbTintColor = config.themeColor
-        toggle.tintColor = config.themeColor
+		toggle.onTintColor = config.toggleOffColor ?? config.altThemeColor
+		toggle.thumbTintColor = config.toggleOnColor ?? config.themeColor
+        toggle.tintColor = config.toggleOnColor ?? config.themeColor
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         
         return toggle
@@ -83,7 +83,11 @@ class SwitchTableViewCell: UITableViewCell, UITextViewDelegate {
         self.delegate = delegate
 		self.config = config
         
-        contextTextView.attributedText = model.contextText
+		if let text = model.contextText {
+			contextTextView.text = text
+		} else {
+			contextTextView.attributedText = model.attrContextText
+		}
         toggle.setOn(model.defaultValue, animated: false)
         
         contextTextView.setNeedsLayout()
